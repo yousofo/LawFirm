@@ -1,0 +1,26 @@
+@LawFirm.API_HostAddress = http://localhost:5118
+
+GET {{LawFirm.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+GET {{LawFirm.API_HostAddress}}/api/lawyers
+
+###
+GET {{LawFirm.API_HostAddress}}/api/lawyers/1
+
+###
+POST {{LawFirm.API_HostAddress}}/api/lawyers
+Content-Type: application/json
+
+{
+  "Name":"test name",
+  "Description":"test description",
+  "Category":"test category",
+  "IsAvailable": true,
+  "ContactEmail": "test email",
+  "ContactNumber":  "1234567890" 
+}
+
+###
+DELETE {{LawFirm.API_HostAddress}}/api/lawyers/1
