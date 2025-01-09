@@ -6,12 +6,23 @@ namespace LawFirm.API.Controllers
 {
     [ApiController]
     [Route("api/lawyers")]
-    public class LawyersController(LawyersService lawyersService) : ControllerBase
+    public class LawyersController(LawyersService lawyersService, ILogger<LawyersController> logger) : ControllerBase
     {
+        private readonly ILogger<LawyersController> _logger = logger;
+
         [HttpGet]
         public async Task<IActionResult> GetLawyers()
         {
+
+            _logger.LogError("At Lawyers /");
+
             var lawyers = await lawyersService.GetLawyers();
+
+            string? hi = Request.Host.Value;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(Request.Headers.Accept.ToString());
+            _logger.LogInformation("{hi}",hi);
+
             return Ok(lawyers);
         }
 
@@ -36,7 +47,7 @@ namespace LawFirm.API.Controllers
         [Route("{id}")]
         public async Task<IActionResult> DeleteLawyer(int id)
         {
-            bool deleted= await lawyersService.DeleteLawyer(id);
+            bool deleted = await lawyersService.DeleteLawyer(id);
             if (deleted)
             {
                 return NoContent();
@@ -50,7 +61,7 @@ namespace LawFirm.API.Controllers
         public async Task<IActionResult> CreateLawyer([FromBody] LawyerDto lawyerDto)
         {
             int id = await lawyersService.CreateLawyer(lawyerDto);
-            return CreatedAtAction(nameof(GetLawyer), new {id},null);
+            return CreatedAtAction(nameof(GetLawyer), new { id }, null);
 
 
         }
@@ -58,10 +69,10 @@ namespace LawFirm.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateLawyer(int id,[FromBody] LawyerDto lawyerDto)
+        public async Task<IActionResult> UpdateLawyer(int id, [FromBody] LawyerDto lawyerDto)
         {
             int _id = await lawyersService.UpdateLawyer(lawyerDto);
-            if(_id < 0)
+            if (_id < 0)
             {
                 return NotFound();
             }

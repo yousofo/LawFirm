@@ -10,6 +10,7 @@ namespace LawFirm.API.Middlewares
         {
             _logger.LogInformation("ErrorHandlingMw: Handling request");
             await _next.Invoke(context);
+
             _logger.LogInformation("ErrorHandlingMw: after next");
             //try
             //{
